@@ -79,13 +79,23 @@ class AddAirportForm(forms.Form):
         # Return the validated data
         return cleaned_data
     
+# Form for searching a route from a selected airport
 class SearchForm(forms.Form):
+
+    # Select the airport where the search begins
     start_airport = forms.ModelChoiceField(
         queryset=Airport.objects.all(),
         label="Starting Airport"
     )
+
+    # Available traversal directions
     DIRECTION_CHOICES = [
         ('left', 'Left'),
         ('right', 'Right'),
     ]
-    direction = forms.ChoiceField(choices=DIRECTION_CHOICES, label="Direction")
+
+    # Select the direction to traverse from the starting airport
+    direction = forms.ChoiceField(
+        choices=DIRECTION_CHOICES,
+        label="Direction"
+    )
