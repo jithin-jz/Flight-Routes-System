@@ -1,21 +1,49 @@
-# Virtual environment
-.venv/
-
-# Python
+# Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*$py.class
+*.so
+.Python
+
+# Virtual Environment
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
 
 # Django
 db.sqlite3
+db.sqlite3-journal
 media/
 staticfiles/
+static/
+local_settings.py
 
 # Environment variables
 .env
+.env.*
 
-# IDE
+# IDEs & Editors
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
-# Logs
+# Operating System
+.DS_Store
+Thumbs.db
+
+# Testing & Coverage
+.coverage
+htmlcov/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Logs & Temp files
 *.log
+tmp/
+temp/

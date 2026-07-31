@@ -1,0 +1,24 @@
+{% extends 'routes/base.html' %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card p-4 shadow-sm border-0">
+            <h3 class="fw-bold mb-3">Add Airport Route</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-primary w-100 mt-2">Add Airport</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll("select, input[type='text'], input[type='number']").forEach(el => {
+            el.classList.add("form-control", "form-select");
+        });
+    });
+</script>
+{% endblock %}

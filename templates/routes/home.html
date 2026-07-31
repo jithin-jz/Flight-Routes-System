@@ -1,0 +1,98 @@
+{% extends 'routes/base.html' %}
+
+{% block content %}
+<!-- Summary Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm border-0">
+            <h6 class="text-muted mb-1">Total Airports</h6>
+            <h3 class="fw-bold text-primary mb-0">{{ total_airports }}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm border-0">
+            <h6 class="text-muted mb-1">Longest Duration</h6>
+            <h3 class="fw-bold text-warning mb-0">{% if longest_airport %}{{ longest_airport.code }} ({{ longest_airport.duration }} mins){% else %}N/A{% endif %}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card p-3 shadow-sm border-0">
+            <h6 class="text-muted mb-1">Shortest Duration</h6>
+            <h3 class="fw-bold text-success mb-0">{% if shortest_airport %}{{ shortest_airport.code }} ({{ shortest_airport.duration }} mins){% else %}N/A{% endif %}</h3>
+        </div>
+    </div>
+</div>
+
+<!-- Actions Grid -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6">
+        <div class="card p-4 shadow-sm border-0 h-100">
+            <h4 class="card-title fw-bold mb-3">Add Airport</h4>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="add_airport">
+                {{ add_form.as_p }}
+                <button type="submit" class="btn btn-primary w-100 mt-2">Add Airport</button>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card p-4 shadow-sm border-0 h-100">
+            <h4 class="card-title fw-bold mb-3">Search Traversal</h4>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="form_type" value="search_airport">
+                {{ search_form.as_p }}
+                <button type="submit" class="btn btn-outline-primary w-100 mt-2">Run Search</button>
+            </form>
+            {% if search_result %}
+                <div class="alert alert-info mt-3 mb-0" role="alert">
+                    Starting from <strong>{{ search_start_node.code }}</strong> going <strong>{{ search_direction|upper }}</strong>, 
+                    the last reachable airport is <strong>{{ search_result.code }}</strong> (Duration: {{ search_result.duration }} mins).
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<!-- Airport List Table -->
+<div class="card p-4 shadow-sm border-0">
+    <h4 class="card-title fw-bold mb-3">All Registered Airports</h4>
+    <div class="table-responsive">
+        <table class="table table-striped align-middle mb-0">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Code</th>
+                    <th>Duration</th>
+                    <th>Left Child</th>
+                    <th>Right Child</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ap in airports %}
+                    <tr>
+                        <td>#{{ ap.id }}</td>
+                        <td><strong>{{ ap.code }}</strong></td>
+                        <td>{{ ap.duration }} mins</td>
+                        <td>{% if ap.left %}{{ ap.left.code }}{% else %}&mdash;{% endif %}</td>
+                        <td>{% if ap.right %}{{ ap.right.code }}{% else %}&mdash;{% endif %}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted">No airports added yet.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        document.querySelectorAll("select, input[type='text'], input[type='number']").forEach(el => {
+            el.classList.add("form-control", "form-select");
+        });
+    });
+</script>
+{% endblock %}

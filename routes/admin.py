@@ -7,13 +7,11 @@ from .models import Airport
 class AirportAdmin(admin.ModelAdmin):
     # Columns displayed in the admin list view
     list_display = (
-        'code',
-        'duration',
-        'left',
-        'right',
+        "code",
+        "duration",
+        "left",
+        "right",
     )
 
     # Enable searching airports by their code
-    search_fields = (
-        'code',
-    )
+    search_fields = ("code",)
